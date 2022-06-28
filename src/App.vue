@@ -1,17 +1,20 @@
 <template>
-  <v-app>
+  <v-app :theme="theme">
     <v-app-bar color="primary" app>
-      <v-app-bar-title>が苦情++</v-app-bar-title>
+      <v-app-bar-nav-icon variant="text" @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
+      <v-app-bar-title class="ml-4">学情＋＋</v-app-bar-title>
+      <v-btn variant="text" :icon="`mdi-brightness-${theme === 'dark' ? '2' : '7'}`" @click="theme = theme === 'dark' ? 'light' : 'dark'"></v-btn>
     </v-app-bar>
 
-    <v-navigation-drawer color="grey-darken-2" permanent mini-variant>
-      <v-list>
-        <v-list-item prepend-icon="mdi-home" href="#/">Home</v-list-item>
-        <v-list-item prepend-icon="mdi-heart" href="#/favorites">Favorites</v-list-item>
-        <v-list-item prepend-icon="mdi-calendar" href="#/schedule">Schedule</v-list-item>
-        <v-list-item prepend-icon="mdi-cog" href="#/settings">Settings</v-list-item>
+    <v-navigation-drawer app :rail="drawer">
+      <v-list nav>
+        <v-list-item prepend-icon="mdi-home" href="#/" title="ホーム" :active="currentPath === '#/' || currentPath === ''" />
+        <v-list-item prepend-icon="mdi-heart" href="#/favorites" title="お気に入り" :active="currentPath === '#/favorites'"/>
+        <v-list-item prepend-icon="mdi-calendar" href="#/schedule" title="時間割" :active="currentPath === '#/schedule'" />
+        <v-list-item prepend-icon="mdi-cog" href="#/settings" title="設定" :active="currentPath === '#/settings'" />
       </v-list>
     </v-navigation-drawer>
+    
     <v-main>
       <v-container fluid>
         <component :is="currentView"/>
@@ -21,10 +24,14 @@
 </template>
 
 <script>
+import { ref } from '@vue/reactivity'
 import HelloWorld from './components/HelloWorld.vue'
 import Favorites from './components/Favorites.vue'
 import Schedule from './components/Schedule.vue'
 import Settings from './components/Settings.vue'
+
+const drawer = ref(true)
+const theme = ref('dark')
 
 const routes = {
   '/': HelloWorld,
@@ -40,11 +47,13 @@ export default {
     HelloWorld,
     Favorites,
     Schedule,
-    Settings,
+    Settings
   },
 
   data: () => ({
-      currentPath: window.location.hash
+      currentPath: window.location.hash,
+      drawer,
+      theme
   }),
   computed: {
     currentView() {
