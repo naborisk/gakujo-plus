@@ -6,7 +6,7 @@
       
       <v-list>
         <v-list-item prepend-icon="mdi-home" href="#/">Home</v-list-item>
-        <v-list-item prepend-icon="mdi-forum" href="#/test">test</v-list-item>
+        <v-list-item prepend-icon="mdi-cog" href="#/settings">Settings</v-list-item>
       </v-list>
     </v-navigation-drawer>
     <v-main>
@@ -19,11 +19,11 @@
 
 <script>
 import HelloWorld from './components/HelloWorld.vue'
-import Test from './components/Test.vue'
+import Settings from './components/Settings.vue'
 
 const routes = {
   '/': HelloWorld,
-  '/test': Test
+  '/settings': Settings
 }
 
 export default {
@@ -31,7 +31,7 @@ export default {
 
   components: {
     HelloWorld,
-    Test,
+    Settings,
   },
 
   data: () => ({
