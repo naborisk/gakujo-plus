@@ -6,8 +6,13 @@
                 :ripple="false"
                 :color="data.type == 'レポート' ? 'primary' : ''"
                 size="small"
-                class="my-2"
+                class="my-2 mr-2"
             >{{data.type}}</v-chip>
+            <v-chip
+                size="small"
+                v-if="data.title.includes('未読')"
+                color="red"
+            >未読</v-chip>
             <v-card-title>{{data.title}}</v-card-title>
             <v-card-subtitle>{{data.date}}</v-card-subtitle>
           </v-card-header-text>
@@ -36,8 +41,10 @@
                                 v-for="c in contents"
                                 :key="c"
                             >
-                                <td>{{c.title}}</td>
-                                <td>{{c.content}}</td>
+                                <td width="175px">{{c.title}}</td>
+                                <td>
+                                    <pre v-html="linkifyHtml(c.content, {target: '_blank'})" style="white-space:pre-line;"/>
+                                </td>
                             </tr>
                         </tbody>
                     </v-table>
@@ -49,14 +56,15 @@
       </v-card>
 </template>
 <script setup>
-import { ref } from "@vue/reactivity";
-import axios from "axios";
+import { ref, toRef } from "@vue/reactivity"
+import axios from "axios"
+import linkifyHtml from 'linkify-html'
 
 const show = ref(false)
 
 const contents = ref()
 
-defineProps({
+const props = defineProps({
     data: Object,
     index: Number
 })
@@ -64,7 +72,7 @@ defineProps({
 const expand = () => {
     if(!show.value) {
         show.value = true
-        if(!contents.value) axios.get('http://localhost:3000/notifications', {params: {open: 1}})
+        if(!contents.value) axios.get('http://localhost:3000/notifications', {params: {open: props.index}})
             .then(res => {contents.value = res.data})
     } else {
         show.value = false

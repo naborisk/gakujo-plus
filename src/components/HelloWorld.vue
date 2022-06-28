@@ -1,40 +1,69 @@
 <template>
    <h1>お知らせ</h1>
-   <v-row
-      v-for="n, i in notifications"
-      :key="i"
-   >
-    <v-col>
-      <v-lazy
-        transition="fade-transition"
-      >
-        <notification-card
-          :data="n"
-          :index="i"
-        ></notification-card>
-      </v-lazy>
-      <!-- <v-card>
-        <v-card-header>
-          <v-card-header-text>
-            <v-card-title>{{n.title}}</v-card-title>
-            <v-card-subtitle>{{n.type + ' ' + n.date}}</v-card-subtitle>
-          </v-card-header-text>
-        </v-card-header>
-            <v-card-actions>
-              <v-btn
-                :icon="show ? 'mdi-chevron-up' : 'mdi-chevron-down'"
-                @click="show = !show"
-              ></v-btn>
-            </v-card-actions>
-      </v-card> -->
-    </v-col>
-   </v-row>
+   <!-- <v-btn color="primary" @click="filter = 'レポート'">レポート</v-btn>
+   <v-btn color="secondary" @click="filter = '学内連絡'">学内連絡</v-btn>
+   <v-btn color="red" @click="filter = ''">クリア</v-btn> -->
+    <v-btn-toggle
+      v-model="filter"
+      shaped
+      mandatory
+      color="primary"
+      variant="outlined"
+      divided
+      class="my-4"
+    >
+      <v-btn value="">
+        全て
+      </v-btn>
 
-    <div v-if="!notifications">
+      <v-btn value="レポート">
+        レポート
+      </v-btn>
+
+      <v-btn value="学内連絡">
+        学内連絡
+      </v-btn>
+
+      <v-btn value="小テスト">
+        小テスト
+      </v-btn>
+
+      <v-btn value="授業アンケート">
+        授業アンケート
+      </v-btn>
+    </v-btn-toggle>
+    <v-text-field
+      label="検索"
+      prepend-inner-icon="mdi-magnify"
+      variant="outlined"
+      v-model="search"
+    ></v-text-field>
+        
+    <div v-if="notifications.length === 0">
       <v-progress-linear indeterminate></v-progress-linear>
     </div>
 
-   <!-- <code>{{notifications}}</code> -->
+    <div
+    v-for="n, i in notifications"
+    :key="i"
+    >
+      <v-row
+          v-if="(n.type === filter || filter === '') && n.title.includes(search)"
+      >
+        <v-col >
+          <v-lazy
+            transition="fade-transition"
+          >
+            <notification-card
+              :data="n"
+              :index="i"
+            ></notification-card>
+          </v-lazy>
+        </v-col>
+      </v-row>
+    </div>
+
+
 </template>
 
 <script setup>
@@ -43,7 +72,11 @@ import { computed, onMounted } from "@vue/runtime-core"
 import axios from 'axios'
 import NotificationCard from "./NotificationCard.vue"
 
-const notifications = ref()
+const notifications = ref([])
+
+const filter = ref('')
+
+const search = ref('')
 
 const fetchNotifications = () => {
   axios.get('http://localhost:3000/notifications')
@@ -54,6 +87,6 @@ const fetchNotifications = () => {
 
 onMounted(() => {
   //プログレスバーを見たいからsetTimeoutを使った（あとで消そう）
-  setTimeout(fetchNotifications, 1000)
+  setTimeout(fetchNotifications, 500)
 })
 </script>

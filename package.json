@@ -11,6 +11,8 @@
   "dependencies": {
     "@mdi/font": "5.9.55",
     "axios": "^0.27.2",
+    "linkify-html": "^3.0.5",
+    "linkifyjs": "^3.0.5",
     "roboto-fontface": "*",
     "vue": "^3.2.25",
     "vuetify": "^3.0.0-beta.0",
