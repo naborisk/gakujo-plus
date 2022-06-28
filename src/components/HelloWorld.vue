@@ -1,6 +1,19 @@
 <template>
-   <h1>HelloWorld</h1> 
-   <p>{{notifications}}</p>
+   <h1>お知らせ</h1>
+   <v-card
+    v-for="n, i in notifications"
+    :key="i"
+    >
+      <v-card-title>
+        {{n.title}}
+      </v-card-title>
+      <v-card-subtitle>
+        {{n.type + ' ' + n.date}}
+      </v-card-subtitle>
+
+   </v-card>
+
+   <code>{{notifications}}</code>
 </template>
 
 <script setup>
