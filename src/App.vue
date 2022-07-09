@@ -1,12 +1,15 @@
 <template>
   <v-app :theme="theme">
     <v-app-bar color="primary" app>
-      <v-app-bar-nav-icon variant="text" @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
+      <v-app-bar-nav-icon
+        variant="text"
+        @click.stop="$vuetify.display.mobile ? drawer = !drawer : rail = !rail"
+      ></v-app-bar-nav-icon>
       <v-app-bar-title class="ml-4">学情＋＋</v-app-bar-title>
       <v-btn variant="text" :icon="`mdi-brightness-${theme === 'dark' ? '2' : '7'}`" @click="theme = theme === 'dark' ? 'light' : 'dark'"></v-btn>
     </v-app-bar>
 
-    <v-navigation-drawer app :rail="drawer">
+    <v-navigation-drawer app :rail="$vuetify.display.mobile ? false : rail" v-model="drawer">
       <v-list nav>
         <v-list-item prepend-icon="mdi-home" href="#/" title="ホーム" :active="currentPath === '#/' || currentPath === ''" />
         <v-list-item prepend-icon="mdi-heart" href="#/favorites" title="お気に入り" :active="currentPath === '#/favorites'"/>
@@ -30,7 +33,9 @@ import Favorites from './components/Favorites.vue'
 import Schedule from './components/Schedule.vue'
 import Settings from './components/Settings.vue'
 
-const drawer = ref(true)
+const rail = ref(true)
+const drawer = ref()
+
 const theme = ref('dark')
 
 const routes = {
