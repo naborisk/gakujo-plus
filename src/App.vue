@@ -5,7 +5,7 @@
         variant="text"
         @click.stop="$vuetify.display.mobile ? drawer = !drawer : rail = !rail"
       ></v-app-bar-nav-icon>
-      <v-app-bar-title class="ml-4">学情＋＋</v-app-bar-title>
+      <v-app-bar-title class="ml-4">学情プラス</v-app-bar-title>
       <v-btn variant="text" :icon="`mdi-brightness-${theme === 'dark' ? '2' : '7'}`" @click="theme = theme === 'dark' ? 'light' : 'dark'"></v-btn>
     </v-app-bar>
 

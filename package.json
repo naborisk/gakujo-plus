@@ -1,11 +1,13 @@
 {
-  "name": "gakujo-frontend",
-  "version": "0.0.0",
+  "name": "Gakujo Plus",
+  "version": "0.0.1",
+  "main": "main.js",
   "private": true,
   "scripts": {
     "serve": "vite preview",
     "build": "vite build",
     "dev": "vite",
+    "electron:start": "electron .",
     "preview": "vite preview"
   },
   "dependencies": {
