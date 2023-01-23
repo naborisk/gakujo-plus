@@ -1,11 +1,15 @@
 # 学情プラス
 学情プラスは、某大学の学務情報システム用のインターフェイスです。
 
+# ビルド
+このアプリ[electronjs](https://www.electronjs.org/)を使用している。  
 
-# Vue 3 + Vite
+開発したいときにまず以下を実行する。
+```sh 
+npm install
+```
 
-This template should help get you started developing with Vue 3 in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
-
-## Recommended IDE Setup
-
-- [VS Code](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar)
+次に、開発用のアプリを立ち上げるときに以下のコマンドを実行する。
+```sh
+npm run build && npm run electron:start
+```
