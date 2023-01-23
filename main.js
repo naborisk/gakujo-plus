@@ -1,6 +1,6 @@
-const { app, BrowserWindow, ipcMain } = require('electron')
+const { app, BrowserWindow, ipcMain, safeStorage } = require('electron')
 const path = require('path')
-
+const fs = require('fs')
 
 let mainWindow = null
 let apiWindow = null
@@ -39,8 +39,13 @@ app.whenReady().then(() => {
   mainWindow.setTitle('学情プラス')
   mainWindow.hide()
 
-  // .btn_login
+  mainWindow.on('closed', () => {
+    app.quit()
+  })
+
   apiWindow.loadURL('https://gakujo.shizuoka.ac.jp/')
+  apiWindow.webContents.openDevTools()
+
   apiWindow.webContents.on('dom-ready', () => {
     console.log('apiWindow page loaded')
     apiWindow.send('pageloaded')
@@ -58,6 +63,21 @@ ipcMain.on('webdata', (e, ipcData) => {
   console.log('webdata event')
   console.log(data.url)
   //mainWindow.send('extracthtml', data.html)
+})
+
+ipcMain.on('loginpage', () => {
+  console.log('loginpage reached')
+  if(fs.existsSync('credentials.json')) {
+    apiWindow.send('credentials', safeStorage.decryptString(fs.readFileSync('credentials.json')).toString())
+  } else {
+    console.log('nocredentials sent')
+    apiWindow.send('nocredentials')
+  }
+})
+
+ipcMain.on('savecredentials', (e, cred) => {
+  console.log('received credentials: ' + cred)
+  fs.writeFileSync('credentials.json', safeStorage.encryptString(cred))
 })
 
 ipcMain.on('loggedin', () => {
