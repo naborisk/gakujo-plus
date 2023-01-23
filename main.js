@@ -17,9 +17,11 @@ app.whenReady().then(() => {
     width: 800,
     height: 600,
     title: '学情プラス',
+    autoHideMenuBar: true,
     webPreferences: {
-      // preload: path.join(__dirname, 'preload.js'),
-    },
+      nodeIntegration: false,
+      preload: path.join(__dirname, 'preload-main.js')
+    }
   })
 
   // create api window
@@ -30,14 +32,15 @@ app.whenReady().then(() => {
     show: true,
     webPreferences: {
       nodeIntegration: false,
-      preload: path.join(__dirname, 'preload.js')
+      preload: path.join(__dirname, 'preload-api.js')
     }
   })
 
   // start main window, should detect login here, if not then try login
   mainWindow.loadFile('dist/index.html')
   mainWindow.setTitle('学情プラス')
-  mainWindow.hide()
+  // mainWindow.hide()
+  mainWindow.webContents.openDevTools()
 
   mainWindow.on('closed', () => {
     app.quit()
@@ -62,7 +65,7 @@ ipcMain.on('webdata', (e, ipcData) => {
   const data = JSON.parse(ipcData)
   console.log('webdata event')
   console.log(data.url)
-  //mainWindow.send('extracthtml', data.html)
+  mainWindow.send('html', data.html)
 })
 
 ipcMain.on('loginpage', () => {
