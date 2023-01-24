@@ -13,3 +13,6 @@ npm install
 ```sh
 npm run build && npm run electron:start
 ```
+
+## プレビュー
+![preview](img/preview.png)

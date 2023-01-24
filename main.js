@@ -38,7 +38,6 @@ app.whenReady().then(() => {
 
   // start main window, should detect login here, if not then try login
   mainWindow.loadFile('dist/index.html')
-  mainWindow.setTitle('学情プラス')
   mainWindow.hide()
   // mainWindow.webContents.openDevTools()
 
@@ -86,6 +85,7 @@ ipcMain.on('savecredentials', (e, cred) => {
 ipcMain.on('loggedin', () => {
   apiWindow.hide()
   mainWindow.show()
+  mainWindow.setTitle('学情プラス')
 })
 
 app.on('window-all-closed', () => {
