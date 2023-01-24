@@ -13,10 +13,11 @@
   "dependencies": {
     "@mdi/font": "5.9.55",
     "axios": "^0.27.2",
+    "electron": "^22.0.3",
     "linkify-html": "^3.0.5",
     "linkifyjs": "^3.0.5",
     "roboto-fontface": "*",
-    "vue": "^3.2.25",
+    "vue": "^3.2.45",
     "vuetify": "^3.1.2",
     "webfontloader": "^1.0.0"
   },
