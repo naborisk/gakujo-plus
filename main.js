@@ -39,15 +39,15 @@ app.whenReady().then(() => {
   // start main window, should detect login here, if not then try login
   mainWindow.loadFile('dist/index.html')
   mainWindow.setTitle('学情プラス')
-  // mainWindow.hide()
-  mainWindow.webContents.openDevTools()
+  mainWindow.hide()
+  // mainWindow.webContents.openDevTools()
 
   mainWindow.on('closed', () => {
     app.quit()
   })
 
   apiWindow.loadURL('https://gakujo.shizuoka.ac.jp/')
-  apiWindow.webContents.openDevTools()
+  // apiWindow.webContents.openDevTools()
 
   apiWindow.webContents.on('dom-ready', () => {
     console.log('apiWindow page loaded')

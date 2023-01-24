@@ -69,8 +69,8 @@
 <script setup>
 import { ref } from "@vue/reactivity"
 import { computed, onMounted } from "@vue/runtime-core"
-import axios from 'axios'
 import NotificationCard from "./NotificationCard.vue"
+
 
 const notifications = ref([])
 
@@ -79,14 +79,15 @@ const filter = ref('')
 const search = ref('')
 
 const fetchNotifications = () => {
-  axios.get('http://localhost:3000/notifications')
-    .then(res => {
-      notifications.value = res.data
-    })
+    notifications.value = JSON.parse(sessionStorage.getItem('notifications'))
 }
 
 onMounted(() => {
   //プログレスバーを見たいからsetTimeoutを使った（あとで消そう）
-  setTimeout(fetchNotifications, 500)
+//  setTimeout(fetchNotifications, 500)
+  fetchNotifications()
+  window.addEventListener('notifications', () => {
+    fetchNotifications()
+  })
 })
 </script>
