@@ -7,11 +7,6 @@ let apiWindow = null
 
 app.whenReady().then(() => {
 
-  /** TODO:
-   * - Handle Login
-   * - Scrape
-   */
-
   // create main window
   mainWindow = new BrowserWindow({
     width: 800,
