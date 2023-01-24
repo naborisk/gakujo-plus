@@ -28,7 +28,7 @@
 
 <script>
 import { ref } from '@vue/reactivity'
-import HelloWorld from './components/HelloWorld.vue'
+import Home from './components/Home.vue'
 import Favorites from './components/Favorites.vue'
 import Schedule from './components/Schedule.vue'
 import Settings from './components/Settings.vue'
@@ -39,7 +39,7 @@ const drawer = ref()
 const theme = ref('dark')
 
 const routes = {
-  '/': HelloWorld,
+  '/': Home,
   '/favorites': Favorites,
   '/schedule': Schedule,
   '/settings': Settings
@@ -49,7 +49,7 @@ export default {
   name: 'App',
 
   components: {
-    HelloWorld,
+    Home,
     Favorites,
     Schedule,
     Settings
